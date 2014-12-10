@@ -18,7 +18,7 @@ DigitalInput *limitSwitch;
 float gyroAngle;
 static const float Kp = 0.03;
 
-class Robot: public IterativeRobot
+class Robot : public IterativeRobot
 {
 
 	Joystick stick; // only joystick
@@ -75,8 +75,10 @@ private:
 			myRobot->Drive(-0.5, -gyroAngle * Kp); 	// drive forwards half speed
 
 			autoLoopCounter++;
-			} else {
-			myRobot->Drive(0.0, 0.0); 	// stop robot
+		}
+		else
+		{
+			myRobot->Drive(0.0, 0.0); // stop robot
 		}
 	}
 
@@ -102,11 +104,13 @@ private:
 			rightY = stick.GetRawAxis(5);
 			leftY =	stick.GetRawAxis(1) * -1.0;
 
-			if ((rightY < 0.1) and (rightY > -0.1))
+			if ((rightY < 0.1) && (rightY > -0.1)) {
 				rightY = 0;
+			}
 
-			if ((leftY < 0.1) and (leftY > -0.1))
+			if ((leftY < 0.1) && (leftY > -0.1)) {
 				leftY = 0;
+			}
 
 			leftFront->Set(leftY);
 			leftRear->Set(leftY);
@@ -116,9 +120,11 @@ private:
 			passCount++;
 			if ((passCount % numLoopsPerScan) == 0) {
 				offsetVal = 1;
-			  } else if (servoAngle >= 120) {
+			}
+			else if (servoAngle >= 120) {
 				offsetVal = -1;
-			  }
+			}
+			else { // not sure if this was intended to be in an else, but it sorta looked like it
   			    servoAngle += offsetVal;
 				ultrasonicServo->SetAngle(servoAngle);
 				passCount = 0;
@@ -127,7 +133,6 @@ private:
 			if (!(limitSwitch->Get())) {
 				// It's closed now
 			}//-r-
-
 		}
 	}
 
